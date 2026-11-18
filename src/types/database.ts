@@ -180,6 +180,9 @@ export type Database = {
           assessed_at: string | null;
           assessed_by: string | null;
           updated_at: string;
+          /** Set by the database when completed tasks closed the gap. */
+          resolved_by_tasks: boolean;
+          pre_resolution: Json | null;
         };
         Insert: never;
         Update: {

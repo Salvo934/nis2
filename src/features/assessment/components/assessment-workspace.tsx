@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, Search } from "lucide-react";
+import { ChevronRight, Search, Zap } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { StatusBadge } from "@/components/status-badge";
@@ -157,6 +157,15 @@ export function AssessmentWorkspace({ items, members, canEdit, sourceUrl }: Prop
                         value={answer.gap_severity}
                         className="hidden md:inline-flex"
                       />
+                    ) : null}
+                    {answer.resolved_by_tasks ? (
+                      <span
+                        className="inline-flex items-center gap-1 text-xs text-muted-foreground"
+                        title="Aggiornato automaticamente dalle attività completate"
+                      >
+                        <Zap className="size-3.5" aria-hidden="true" />
+                        <span className="sr-only md:not-sr-only">da attività</span>
+                      </span>
                     ) : null}
                     <StatusBadge options={ANSWER_STATUSES} value={answer.status} />
                     <ChevronRight className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />

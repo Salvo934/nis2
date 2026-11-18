@@ -90,6 +90,14 @@ export function AnswerEditor({ item, members, canEdit, sourceUrl, onSaved }: Pro
         </p>
       </section>
 
+      {answer.resolved_by_tasks ? (
+        <FormAlert tone="info" title="Aggiornato automaticamente">
+          Segnato come «Implementato» al completamento di tutte le attività correttive collegate. Se riapri
+          una di queste attività, il requisito torna alla valutazione precedente; una modifica manuale qui
+          prevale sempre.
+        </FormAlert>
+      ) : null}
+
       {canEdit ? (
         <form onSubmit={handleSubmit(onSubmit)} noValidate aria-label={`Valutazione ${requirement.code}`}>
           <FieldGroup>

@@ -22,6 +22,33 @@ const ACTION_LABELS: Record<string, string> = {
   "invitation.created": "Invito creato",
   "invitation.revoked": "Invito revocato",
   "invitation.accepted": "Invito accettato",
+  "assessment.created": "Assessment creato",
+  "assessment.status_changed": "Stato assessment modificato",
+  "answer.updated": "Valutazione requisito modificata",
+  "answer.auto_resolved": "Requisito implementato (automatico)",
+  "answer.auto_reopened": "Requisito riaperto (automatico)",
+  "task.created": "Attività creata",
+  "task.status_changed": "Stato attività modificato",
+  "task.deleted": "Attività eliminata",
+};
+
+const ANSWER_LABELS: Record<string, string> = {
+  not_assessed: "Non valutato",
+  implemented: "Implementato",
+  partial: "Parziale",
+  not_implemented: "Non implementato",
+  not_applicable: "Non applicabile",
+};
+
+const TASK_LABELS: Record<string, string> = {
+  todo: "Da fare",
+  in_progress: "In corso",
+  blocked: "Bloccata",
+  done: "Completata",
+  cancelled: "Annullata",
+  draft: "Bozza",
+  completed: "Completato",
+  archived: "Archiviato",
 };
 
 const FIELD_LABELS: Record<string, string> = {
@@ -58,6 +85,17 @@ export function describeAuditEvent(action: string, metadata: Json): string {
     case "invitation.revoked":
     case "invitation.accepted":
       return String(m.email ?? "");
+    case "answer.updated":
+    case "answer.auto_resolved":
+    case "answer.auto_reopened":
+      return `${String(m.requirement ?? "")}: ${ANSWER_LABELS[String(m.from)] ?? m.from} → ${ANSWER_LABELS[String(m.to)] ?? m.to}`;
+    case "assessment.created":
+    case "task.created":
+    case "task.deleted":
+      return String(m.title ?? "");
+    case "assessment.status_changed":
+    case "task.status_changed":
+      return `${String(m.title ?? "")}: ${TASK_LABELS[String(m.from)] ?? m.from} → ${TASK_LABELS[String(m.to)] ?? m.to}`;
     default:
       return "";
   }

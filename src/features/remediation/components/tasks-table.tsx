@@ -1,6 +1,6 @@
 "use client";
 
-import { ListTodo, Loader2, Pencil, Search, Trash2 } from "lucide-react";
+import { Check, ListTodo, Loader2, Pencil, Search, Trash2 } from "lucide-react";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -20,7 +20,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { TASK_PRIORITIES, TASK_STATUSES } from "@/features/assessment/constants";
 import { isOpenTask, isOverdue } from "@/features/assessment/metrics";
-import { deleteTaskAction } from "@/features/remediation/actions";
+import { completeTaskAction, deleteTaskAction } from "@/features/remediation/actions";
+import { announceOutcome } from "@/features/remediation/announce-outcome";
 import { TaskFormDialog } from "@/features/remediation/components/task-form-dialog";
 import { formatDate } from "@/lib/format";
 import type { Tables } from "@/types/database";
@@ -56,6 +57,18 @@ export function TasksTable({ tasks, members, canManage, today }: Props) {
       !q || [t.title, t.description ?? "", t.requirement?.code ?? ""].some((s) => s.toLowerCase().includes(q))
     );
   });
+
+  const [completingId, setCompletingId] = useState<string | null>(null);
+
+  function complete(task: Task) {
+    setCompletingId(task.id);
+    startTransition(async () => {
+      const result = await completeTaskAction(task.id);
+      setCompletingId(null);
+      if (result.ok) announceOutcome("Attività completata", result.data);
+      else toast.error(result.error);
+    });
+  }
 
   function confirmDelete() {
     const task = toDelete;
@@ -133,7 +146,7 @@ export function TasksTable({ tasks, members, canManage, today }: Props) {
                 <TableHead className="hidden md:table-cell">Responsabile</TableHead>
                 <TableHead>Scadenza</TableHead>
                 {canManage ? (
-                  <TableHead className="w-20">
+                  <TableHead className="w-28">
                     <span className="sr-only">Azioni</span>
                   </TableHead>
                 ) : null}
@@ -166,6 +179,19 @@ export function TasksTable({ tasks, members, canManage, today }: Props) {
                     {canManage ? (
                       <TableCell>
                         <div className="flex gap-1">
+                          {isOpenTask(t.status) ? (
+                            <Button
+                              variant="ghost"
+                              size="icon-sm"
+                              className="text-success hover:text-success"
+                              aria-label={`Segna come completata: ${t.title}`}
+                              title="Segna come completata"
+                              onClick={() => complete(t)}
+                              disabled={pending}
+                            >
+                              {completingId === t.id ? <Loader2 className="animate-spin" /> : <Check />}
+                            </Button>
+                          ) : null}
                           <TaskFormDialog
                             task={t}
                             members={members}

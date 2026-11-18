@@ -110,5 +110,15 @@ describe("describeAuditEvent", () => {
       "Campi: ragione sociale, settore",
     );
     expect(describeAuditEvent("unknown.event", null)).toBe("");
+    expect(
+      describeAuditEvent("answer.auto_resolved", {
+        requirement: "DIR-21.2.b",
+        from: "partial",
+        to: "implemented",
+      }),
+    ).toBe("DIR-21.2.b: Parziale → Implementato");
+    expect(describeAuditEvent("task.status_changed", { title: "Backup", from: "todo", to: "done" })).toBe(
+      "Backup: Da fare → Completata",
+    );
   });
 });

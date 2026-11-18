@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import type { z } from "zod";
 
 import { applyFieldErrors } from "@/components/forms/apply-field-errors";
@@ -25,6 +24,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field
 import { Textarea } from "@/components/ui/textarea";
 import { TASK_PRIORITIES, TASK_STATUSES } from "@/features/assessment/constants";
 import { createTaskAction, updateTaskAction } from "@/features/remediation/actions";
+import { announceOutcome } from "@/features/remediation/announce-outcome";
 import { taskSchema } from "@/features/remediation/schemas";
 import type { Tables } from "@/types/database";
 
@@ -86,7 +86,7 @@ export function TaskFormDialog({ trigger, members, task, gap }: Props) {
       applyFieldErrors(setError, result.fieldErrors);
       return;
     }
-    toast.success(task ? "Attività aggiornata" : "Attività creata");
+    announceOutcome(task ? "Attività aggiornata" : "Attività creata", result.data);
     setOpen(false);
   }
 
