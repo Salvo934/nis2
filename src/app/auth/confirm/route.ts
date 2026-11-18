@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { emailOtpTypeSchema } from "@/features/auth/schemas";
 import { safeRedirectPath } from "@/lib/auth/routes";
+import { publicOrigin } from "@/lib/request-origin";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -21,12 +22,13 @@ export async function GET(request: NextRequest) {
   const fallback = type.success && type.data === "recovery" ? "/update-password" : "/dashboard";
   const next = safeRedirectPath(searchParams.get("next"), fallback);
   const code = searchParams.get("code");
+  const origin = publicOrigin(request);
 
   if (tokenHash && tokenHash.length <= 512 && type.success) {
     const supabase = await createClient();
     const { error } = await supabase.auth.verifyOtp({ type: type.data, token_hash: tokenHash });
     if (!error) {
-      return NextResponse.redirect(new URL(next, request.url));
+      return NextResponse.redirect(new URL(next, origin));
     }
   }
 
@@ -34,11 +36,11 @@ export async function GET(request: NextRequest) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(new URL(next, request.url));
+      return NextResponse.redirect(new URL(next, origin));
     }
   }
 
-  const errorUrl = new URL("/login", request.url);
+  const errorUrl = new URL("/login", origin);
   errorUrl.searchParams.set("error", "link_invalid");
   return NextResponse.redirect(errorUrl);
 }

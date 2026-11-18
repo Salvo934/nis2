@@ -6,6 +6,15 @@ Piattaforma SaaS B2B multi-tenant per gestire il percorso di adeguamento alla **
 >
 > NIS2 Control è uno strumento di supporto. Non rilascia certificazioni né sostituisce la consulenza legale. Non è ancora pronto per la produzione: mancano i test di sicurezza previsti in M7.
 
+## Ambiente online
+
+|                          |                                                                |
+| ------------------------ | -------------------------------------------------------------- |
+| App (Cloudflare Workers) | https://nis2-control.salvo-bonavita9808.workers.dev            |
+| Supabase                 | progetto `nis2-control` (`qfosmdkbqkftbcdyfvkh`, eu-central-1) |
+
+È un ambiente dimostrativo: usa esclusivamente dati fittizi.
+
 ## Stack
 
 Next.js 16 (App Router) · TypeScript strict · Supabase (Postgres, Auth, Storage, RLS) · `@supabase/ssr` · Tailwind CSS v4 · shadcn/ui · Lucide · Recharts · React Hook Form + Zod · Vitest · Playwright · Cloudflare Workers (OpenNext)
