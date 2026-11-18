@@ -5,13 +5,21 @@ import type { OrgRole } from "@/types/database";
  * It only decides what to *show*; the database enforces the same rules
  * independently, so a wrong entry here can never grant access.
  */
-export type Permission = "organization.update" | "members.manage" | "invitations.manage" | "audit.read";
+export type Permission =
+  | "organization.update"
+  | "members.manage"
+  | "invitations.manage"
+  | "audit.read"
+  | "assessment.manage"
+  | "tasks.manage";
 
 const MATRIX: Record<Permission, readonly OrgRole[]> = {
   "organization.update": ["org_admin"],
   "members.manage": ["org_admin"],
   "invitations.manage": ["org_admin"],
   "audit.read": ["org_admin", "auditor"],
+  "assessment.manage": ["org_admin", "security_manager"],
+  "tasks.manage": ["org_admin", "security_manager"],
 };
 
 export function can(role: OrgRole | null | undefined, permission: Permission): boolean {

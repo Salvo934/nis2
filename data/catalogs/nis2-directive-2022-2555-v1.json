@@ -1,0 +1,171 @@
+{
+  "framework": {
+    "code": "NIS2",
+    "name": "Direttiva NIS2",
+    "issuing_authority": "Parlamento europeo e Consiglio dell'Unione europea"
+  },
+  "version": {
+    "version_label": "2022/2555-v1",
+    "source_title": "Direttiva (UE) 2022/2555 del Parlamento europeo e del Consiglio, del 14 dicembre 2022 (direttiva NIS 2), GU L 333 del 27.12.2022",
+    "source_url": "http://data.europa.eu/eli/dir/2022/2555/oj",
+    "source_published_at": "2022-12-27",
+    "scope_note": "Catalogo v1: requisiti degli articoli 20, 21 e 23 della Direttiva. Le descrizioni riportano il testo ufficiale in lingua italiana; i titoli sono etichette sintetiche redazionali. Non include le misure di dettaglio delle determinazioni ACN né il testo del D.Lgs. 138/2024 di recepimento.",
+    "retrieved_from": "https://publications.europa.eu/resource/celex/32022L2555 (documento L_2022333IT.01008001)",
+    "retrieved_at": "2026-11-18"
+  },
+  "requirements": [
+    {
+      "code": "DIR-20.1",
+      "category_code": "GOV",
+      "category_name": "Governance (art. 20)",
+      "title": "Approvazione e supervisione delle misure da parte degli organi di gestione",
+      "description": "Gli Stati membri provvedono affinché gli organi di gestione dei soggetti essenziali e importanti approvino le misure di gestione dei rischi di cibersicurezza adottate da tali soggetti per conformarsi all'articolo 21, sovraintendano alla sua attuazione e possano essere ritenuti responsabili di violazione da parte dei soggetti di tale articolo.",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 20, par. 1, primo comma",
+      "sort_order": 10
+    },
+    {
+      "code": "DIR-20.2",
+      "category_code": "GOV",
+      "category_name": "Governance (art. 20)",
+      "title": "Formazione degli organi di gestione e del personale",
+      "description": "Gli Stati membri provvedono affinché i membri dell'organo di gestione dei soggetti essenziali e importanti siano tenuti a seguire una formazione e incoraggiano i soggetti essenziali e importanti a offrire periodicamente una formazione analoga ai loro dipendenti, per far sì che questi acquisiscano conoscenze e competenze sufficienti al fine di individuare i rischi e valutare le pratiche di gestione dei rischi di cibersicurezza e il loro impatto sui servizi offerti dal soggetto.",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 20, par. 2",
+      "sort_order": 20
+    },
+    {
+      "code": "DIR-21.1",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Misure tecniche, operative e organizzative adeguate e proporzionate",
+      "description": "Gli Stati membri provvedono affinché i soggetti essenziali e importanti adottino misure tecniche, operative e organizzative adeguate e proporzionate per gestire i rischi posti alla sicurezza dei sistemi informatici e di rete che tali soggetti utilizzano nelle loro attività o nella fornitura dei loro servizi, nonché per prevenire o ridurre al minimo l'impatto degli incidenti per i destinatari dei loro servizi e per altri servizi.",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 1, primo comma",
+      "sort_order": 30
+    },
+    {
+      "code": "DIR-21.2.a",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Analisi dei rischi e sicurezza dei sistemi informatici",
+      "description": "Le misure di cui al paragrafo 1 sono basate su un approccio multirischio mirante a proteggere i sistemi informatici e di rete e il loro ambiente fisico da incidenti e comprendono almeno gli elementi seguenti: politiche di analisi dei rischi e di sicurezza dei sistemi informatici;",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 2, lett. a)",
+      "sort_order": 40
+    },
+    {
+      "code": "DIR-21.2.b",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Gestione degli incidenti",
+      "description": "Le misure di cui al paragrafo 1 sono basate su un approccio multirischio mirante a proteggere i sistemi informatici e di rete e il loro ambiente fisico da incidenti e comprendono almeno gli elementi seguenti: gestione degli incidenti;",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 2, lett. b)",
+      "sort_order": 50
+    },
+    {
+      "code": "DIR-21.2.c",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Continuità operativa, backup, disaster recovery e gestione delle crisi",
+      "description": "Le misure di cui al paragrafo 1 sono basate su un approccio multirischio mirante a proteggere i sistemi informatici e di rete e il loro ambiente fisico da incidenti e comprendono almeno gli elementi seguenti: continuità operativa, come la gestione del backup e il ripristino in caso di disastro, e gestione delle crisi;",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 2, lett. c)",
+      "sort_order": 60
+    },
+    {
+      "code": "DIR-21.2.d",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Sicurezza della catena di approvvigionamento",
+      "description": "Le misure di cui al paragrafo 1 sono basate su un approccio multirischio mirante a proteggere i sistemi informatici e di rete e il loro ambiente fisico da incidenti e comprendono almeno gli elementi seguenti: sicurezza della catena di approvvigionamento, compresi aspetti relativi alla sicurezza riguardanti i rapporti tra ciascun soggetto e i suoi diretti fornitori o fornitori di servizi;",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 2, lett. d)",
+      "sort_order": 70
+    },
+    {
+      "code": "DIR-21.2.e",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Sicurezza di acquisizione, sviluppo e manutenzione; gestione delle vulnerabilità",
+      "description": "Le misure di cui al paragrafo 1 sono basate su un approccio multirischio mirante a proteggere i sistemi informatici e di rete e il loro ambiente fisico da incidenti e comprendono almeno gli elementi seguenti: sicurezza dell'acquisizione, dello sviluppo e della manutenzione dei sistemi informatici e di rete, compresa la gestione e la divulgazione delle vulnerabilità;",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 2, lett. e)",
+      "sort_order": 80
+    },
+    {
+      "code": "DIR-21.2.f",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Valutazione dell'efficacia delle misure",
+      "description": "Le misure di cui al paragrafo 1 sono basate su un approccio multirischio mirante a proteggere i sistemi informatici e di rete e il loro ambiente fisico da incidenti e comprendono almeno gli elementi seguenti: strategie e procedure per valutare l'efficacia delle misure di gestione dei rischi di cibersicurezza;",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 2, lett. f)",
+      "sort_order": 90
+    },
+    {
+      "code": "DIR-21.2.g",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Igiene informatica di base e formazione",
+      "description": "Le misure di cui al paragrafo 1 sono basate su un approccio multirischio mirante a proteggere i sistemi informatici e di rete e il loro ambiente fisico da incidenti e comprendono almeno gli elementi seguenti: pratiche di igiene informatica di base e formazione in materia di cibersicurezza;",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 2, lett. g)",
+      "sort_order": 100
+    },
+    {
+      "code": "DIR-21.2.h",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Crittografia e cifratura",
+      "description": "Le misure di cui al paragrafo 1 sono basate su un approccio multirischio mirante a proteggere i sistemi informatici e di rete e il loro ambiente fisico da incidenti e comprendono almeno gli elementi seguenti: politiche e procedure relative all'uso della crittografia e, se del caso, della cifratura;",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 2, lett. h)",
+      "sort_order": 110
+    },
+    {
+      "code": "DIR-21.2.i",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Risorse umane, controllo degli accessi e gestione degli attivi",
+      "description": "Le misure di cui al paragrafo 1 sono basate su un approccio multirischio mirante a proteggere i sistemi informatici e di rete e il loro ambiente fisico da incidenti e comprendono almeno gli elementi seguenti: sicurezza delle risorse umane, strategie di controllo dell'accesso e gestione degli attivi;",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 2, lett. i)",
+      "sort_order": 120
+    },
+    {
+      "code": "DIR-21.2.j",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Autenticazione a più fattori e comunicazioni protette",
+      "description": "Le misure di cui al paragrafo 1 sono basate su un approccio multirischio mirante a proteggere i sistemi informatici e di rete e il loro ambiente fisico da incidenti e comprendono almeno gli elementi seguenti: uso di soluzioni di autenticazione a più fattori o di autenticazione continua, di comunicazioni vocali, video e testuali protette e di sistemi di comunicazione di emergenza protetti da parte del soggetto al proprio interno, se del caso.",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 2, lett. j)",
+      "sort_order": 130
+    },
+    {
+      "code": "DIR-21.4",
+      "category_code": "RM",
+      "category_name": "Misure di gestione dei rischi di cibersicurezza (art. 21)",
+      "title": "Misure correttive in caso di non conformità",
+      "description": "Gli Stati membri provvedono affinché, qualora un soggetto constati di non essere conforme alle misure di cui al paragrafo 2, esso adotti, senza indebito ritardo, tutte le misure correttive necessarie, appropriate e proporzionate.",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 21, par. 4",
+      "sort_order": 140
+    },
+    {
+      "code": "DIR-23.1",
+      "category_code": "INC",
+      "category_name": "Obblighi di segnalazione (art. 23)",
+      "title": "Notifica degli incidenti significativi",
+      "description": "Ciascuno Stato membro provvede affinché i soggetti essenziali e importanti notifichino senza indebito ritardo al proprio CSIRT o, se opportuno, alla propria autorità competente, conformemente al paragrafo 4, eventuali incidenti che hanno un impatto significativo sulla fornitura dei loro servizi quali indicati al paragrafo 3 (incidente significativo). Se opportuno, i soggetti interessati notificano senza indebito ritardo ai destinatari dei loro servizi gli incidenti significativi che possono ripercuotersi negativamente sulla fornitura di tali servizi. Ciascuno Stato membro provvede affinché tali soggetti comunichino, tra l'altro, qualunque informazione che consenta al CSIRT o, se opportuno, all'autorità competente di determinare l'eventuale impatto transfrontaliero dell'incidente. La sola notifica non espone il soggetto che la effettua a una maggiore responsabilità.",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 23, par. 1, primo comma",
+      "sort_order": 150
+    },
+    {
+      "code": "DIR-23.2",
+      "category_code": "INC",
+      "category_name": "Obblighi di segnalazione (art. 23)",
+      "title": "Comunicazione ai destinatari delle minacce informatiche significative",
+      "description": "Se opportuno, gli Stati membri provvedono affinché i soggetti essenziali e importanti comunichino senza indebito ritardo ai destinatari dei loro servizi che sono potenzialmente interessati da una minaccia informatica significativa qualsiasi misura o azione correttiva che tali destinatari sono in grado di adottare in risposta a tale minaccia. Se opportuno, i soggetti informano tali destinatari anche della minaccia informatica significativa stessa.",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 23, par. 2",
+      "sort_order": 160
+    },
+    {
+      "code": "DIR-23.4",
+      "category_code": "INC",
+      "category_name": "Obblighi di segnalazione (art. 23)",
+      "title": "Tempistiche di notifica: preallarme, notifica e relazione finale",
+      "description": "Gli Stati membri provvedono affinché, ai fini della notifica a norma del paragrafo 1, i soggetti interessati trasmettano al CSIRT o, se opportuno, all'autorità competente: a) senza indebito ritardo, e comunque entro 24 ore da quando sono venuti a conoscenza dell'incidente significativo, un preallarme che, se opportuno, indichi se l'incidente significativo è sospettato di essere il risultato di atti illegittimi o malevoli o può avere un impatto transfrontaliero; b) senza indebito ritardo, e comunque entro 72 ore da quando sono venuti a conoscenza dell'incidente significativo, una notifica dell'incidente che, se opportuno, aggiorni le informazioni di cui alla lettera a) e indichi una valutazione iniziale dell'incidente significativo, comprensiva della sua gravità e del suo impatto, nonché, ove disponibili, gli indicatori di compromissione; [...] d) una relazione finale entro un mese dalla trasmissione della notifica dell'incidente di cui alla lettera b), che comprenda: i) una descrizione dettagliata dell'incidente, comprensiva della sua gravità e del suo impatto; ii) il tipo di minaccia o la causa di fondo che ha probabilmente innescato l'incidente; iii) le misure di attenuazione adottate e in corso; iv) se opportuno, l'impatto transfrontaliero dell'incidente;",
+      "source_reference": "Direttiva (UE) 2022/2555, art. 23, par. 4, primo comma, lett. a), b) e d)",
+      "sort_order": 170
+    }
+  ]
+}

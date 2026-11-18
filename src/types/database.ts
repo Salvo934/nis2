@@ -10,6 +10,11 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type OrgRole = "org_admin" | "security_manager" | "auditor" | "viewer";
 export type SizeClass = "micro" | "small" | "medium" | "large" | "not_specified";
 export type Nis2Classification = "not_determined" | "essential" | "important" | "not_in_scope";
+export type AssessmentStatus = "draft" | "in_progress" | "completed" | "archived";
+export type AnswerStatus = "not_assessed" | "implemented" | "partial" | "not_implemented" | "not_applicable";
+export type GapSeverity = "low" | "medium" | "high" | "critical";
+export type TaskPriority = "low" | "medium" | "high" | "critical";
+export type TaskStatus = "todo" | "in_progress" | "blocked" | "done" | "cancelled";
 
 export type Database = {
   public: {
@@ -106,6 +111,121 @@ export type Database = {
           },
         ];
       };
+      regulatory_frameworks: {
+        Row: { id: string; code: string; name: string; issuing_authority: string | null; created_at: string };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      regulatory_framework_versions: {
+        Row: {
+          id: string;
+          framework_id: string;
+          version_label: string;
+          source_title: string;
+          source_url: string | null;
+          source_published_at: string | null;
+          scope_note: string | null;
+          dataset_checksum: string;
+          status: "draft" | "published" | "retired";
+          imported_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      requirements: {
+        Row: {
+          id: string;
+          framework_version_id: string;
+          code: string;
+          category_code: string;
+          category_name: string;
+          title: string;
+          description: string;
+          source_reference: string;
+          sort_order: number;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      assessments: {
+        Row: {
+          id: string;
+          organization_id: string;
+          framework_version_id: string;
+          title: string;
+          status: AssessmentStatus;
+          created_by: string | null;
+          completed_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: never;
+        Update: { title?: string; status?: AssessmentStatus };
+        Relationships: [];
+      };
+      assessment_answers: {
+        Row: {
+          id: string;
+          organization_id: string;
+          assessment_id: string;
+          framework_version_id: string;
+          requirement_id: string;
+          status: AnswerStatus;
+          justification: string | null;
+          owner_id: string | null;
+          gap_severity: GapSeverity | null;
+          assessed_at: string | null;
+          assessed_by: string | null;
+          updated_at: string;
+        };
+        Insert: never;
+        Update: {
+          status?: AnswerStatus;
+          justification?: string | null;
+          owner_id?: string | null;
+          gap_severity?: GapSeverity | null;
+        };
+        Relationships: [];
+      };
+      remediation_tasks: {
+        Row: {
+          id: string;
+          organization_id: string;
+          assessment_answer_id: string | null;
+          title: string;
+          description: string | null;
+          priority: TaskPriority;
+          status: TaskStatus;
+          assignee_id: string | null;
+          due_date: string | null;
+          completed_at: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          organization_id: string;
+          assessment_answer_id?: string | null;
+          title: string;
+          description?: string | null;
+          priority?: TaskPriority;
+          status?: TaskStatus;
+          assignee_id?: string | null;
+          due_date?: string | null;
+        };
+        Update: {
+          title?: string;
+          description?: string | null;
+          priority?: TaskPriority;
+          status?: TaskStatus;
+          assignee_id?: string | null;
+          due_date?: string | null;
+        };
+        Relationships: [];
+      };
       audit_logs: {
         Row: {
           id: string;
@@ -144,6 +264,10 @@ export type Database = {
         }[];
       };
       accept_invitation: { Args: { p_token: string }; Returns: string };
+      create_assessment: {
+        Args: { p_org: string; p_framework_version: string; p_title: string };
+        Returns: string;
+      };
     };
     Enums: { [_ in never]: never };
     CompositeTypes: { [_ in never]: never };

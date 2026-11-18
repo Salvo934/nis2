@@ -15,6 +15,8 @@ const MESSAGES: Record<string, string> = {
   invitation_email_mismatch:
     "Questo invito è destinato a un altro indirizzo email. Accedi con l'account corretto.",
   last_org_admin: "L'organizzazione deve avere almeno un amministratore.",
+  assignee_not_member: "La persona selezionata non fa parte dell'organizzazione.",
+  catalogue_version_immutable: "Il catalogo normativo pubblicato non può essere modificato.",
 };
 
 export const GENERIC_ERROR = "Operazione non riuscita. Riprova tra poco.";

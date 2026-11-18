@@ -1,6 +1,6 @@
 # Database e modello di autorizzazione
 
-> Stato: le tabelle di identità, tenancy e audit (§2 «Identità e tenancy», `audit_logs`, rate limiter) sono **implementate in M2** in `supabase/migrations/`. Il resto è progetto per M4–M6.
+> Stato: catalogo normativo, assessment, risposte e attività correttive implementati (M3–M5). Le tabelle di identità, tenancy e audit (§2 «Identità e tenancy», `audit_logs`, rate limiter) sono **implementate in M2** in `supabase/migrations/`. Il resto è progetto per M4–M6.
 
 ## 1. Convenzioni
 

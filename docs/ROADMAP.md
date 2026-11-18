@@ -2,15 +2,15 @@
 
 Ogni milestone è "completata" solo quando **tutti** i criteri sono verificati e i comandi indicati passano. Lo stato riportato qui va aggiornato a mano, non presunto.
 
-| #   | Milestone                | Stato                                                                                                                           |
-| --- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | Fondamenta               | Codice scritto; build/lint/unit test verificati localmente. **Flussi auth da verificare con un progetto Supabase reale.**       |
-| 2   | Multi-tenancy            | Migration e RLS verificate su PostgreSQL 14 locale (73 asserzioni). **Da verificare su Supabase reale e con login end-to-end.** |
-| 3   | Dashboard                | Da iniziare                                                                                                                     |
-| 4   | Assessment               | Da iniziare                                                                                                                     |
-| 5   | Gap Analysis             | Da iniziare                                                                                                                     |
-| 6   | Evidenze e report        | Da iniziare                                                                                                                     |
-| 7   | Preparazione commerciale | Da iniziare                                                                                                                     |
+| #   | Milestone                | Stato                                                                                                                                      |
+| --- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | Fondamenta               | Codice scritto; build/lint/unit test verificati localmente. **Flussi auth da verificare con un progetto Supabase reale.**                  |
+| 2   | Multi-tenancy            | Migration e RLS verificate su PostgreSQL 14 locale (73 asserzioni). **Da verificare su Supabase reale e con login end-to-end.**            |
+| 3   | Dashboard                | Metriche reali con criteri espliciti e grafici. Non verificata con un utente loggato.                                                      |
+| 4   | Assessment               | Catalogo v1 (Direttiva, 17 requisiti, testo ufficiale verificato), assessment e risposte. Online. Mancano catalogo ACN e verifica manuale. |
+| 5   | Gap Analysis             | Lacune, criticità e piano di adeguamento. Online. Manca verifica manuale.                                                                  |
+| 6   | Evidenze e report        | Da iniziare                                                                                                                                |
+| 7   | Preparazione commerciale | Da iniziare                                                                                                                                |
 
 ## M1 — Fondamenta
 
@@ -38,6 +38,17 @@ Ogni milestone è "completata" solo quando **tutti** i criteri sono verificati e
 - [ ] E2E autenticati (richiedono un progetto Supabase di test)
 - [ ] Tipi generati con `npm run db:types` al posto di quelli scritti a mano
 - [ ] Invio email degli inviti (oggi l'amministratore copia il link)
+
+## Stato M3–M5 (18/11/2026)
+
+- [x] Catalogo `NIS2 2022/2555-v1`: 17 requisiti degli artt. 20, 21 e 23 della Direttiva (UE) 2022/2555. Descrizioni verificate parola per parola sul testo ufficiale italiano (GU L 333 del 27.12.2022) e checksum SHA-256 salvato con la versione. Dataset in `data/catalogs/`, migration generata con `scripts/catalog/build-migration.mjs`
+- [x] Tabelle `regulatory_frameworks`, `regulatory_framework_versions`, `requirements` (versione pubblicata immutabile), `assessments`, `assessment_answers`, `remediation_tasks`, con RLS, FK composite anti-IDOR e audit
+- [x] Test pgTAP `04_assessments_and_tasks.sql` (32 asserzioni); totale 105 asserzioni verdi in locale
+- [x] UI: elenco e dettaglio assessment con filtri, risposta (stato, motivazione, responsabile, data); gap analysis con criticità e creazione di attività; piano di adeguamento con filtri e scadenze; dashboard con KPI, grafici e criteri di calcolo
+- [x] Migration applicate al progetto Supabase `nis2-control`, contenuto del catalogo verificato online via hash; deploy su Cloudflare
+- [ ] Verifica manuale end-to-end con utente loggato
+- [ ] Catalogo v2 dalle determinazioni ACN (serve il testo ufficiale)
+- [ ] Collegamento evidenze (M6) e report PDF (M6)
 
 ## M3 — Dashboard
 

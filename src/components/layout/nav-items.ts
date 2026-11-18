@@ -30,9 +30,9 @@ export const NAV_SECTIONS: NavSection[] = [
     label: null,
     items: [
       { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, available: true },
-      { href: "/assessments", label: "Assessment NIS2", icon: ClipboardList, available: false },
-      { href: "/gap-analysis", label: "Gap analysis", icon: SearchCheck, available: false },
-      { href: "/tasks", label: "Piano di adeguamento", icon: ListTodo, available: false },
+      { href: "/assessments", label: "Assessment NIS2", icon: ClipboardList, available: true },
+      { href: "/gap-analysis", label: "Gap analysis", icon: SearchCheck, available: true },
+      { href: "/tasks", label: "Piano di adeguamento", icon: ListTodo, available: true },
       { href: "/evidence", label: "Evidenze", icon: FolderLock, available: false },
       { href: "/reports", label: "Report", icon: FileBarChart, available: false },
     ],
