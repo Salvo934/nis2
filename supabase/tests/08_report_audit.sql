@@ -1,7 +1,7 @@
 -- Report generation is audited; only members of the organisation can log it.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(5);
+select plan(7);
 
 -- ---------------------------------------------------------------------------
 -- Test helpers (created inside the transaction, rolled back at the end)
@@ -97,6 +97,16 @@ select ok(exists (select 1 from public.audit_logs
                   where action = 'report.generated' and actor_id = '33333333-3333-3333-3333-333333333333'
                     and metadata ->> 'catalogue_version' = '2022/2555-v1'),
   'the report generation is audited with actor and catalogue version');
+
+select tests.login_as('33333333-3333-3333-3333-333333333333');
+insert into tests.ids select 'report', public.log_report_generated(tests.id('assessment'), '2.0')::text;
+select tests.logout();
+select ok(exists (select 1 from public.audit_logs
+                  where id = tests.id('report') and action = 'report.generated'
+                    and entity_id = tests.id('assessment') and metadata ->> 'report_format' = '2.0'),
+  'the returned report identifier is the id of its audit entry');
+select is((select organization_id from public.audit_logs where id = tests.id('report')), tests.id('org_a'),
+  'the report audit entry belongs to the assessment''s organisation');
 
 select * from finish();
 rollback;

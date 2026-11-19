@@ -17,15 +17,16 @@ import { formatDate } from "@/lib/format";
 export const metadata: Metadata = { title: "Report" };
 
 const CONTENTS = [
-  "Copertina con organizzazione, normativa di riferimento, versione del catalogo e data del report",
-  "Come leggere il report: il significato di ogni esito, spiegato in parole semplici",
-  "Sintesi dei risultati scritta come frasi, con i numeri e i loro denominatori",
-  "Avanzamento per area, con la spiegazione di che cosa riguarda ciascuna area",
-  "Lacune da colmare ordinate per criticità e attività correttive collegate",
-  "Piano di adeguamento con responsabili, scadenze e ritardi",
-  "Prossimi passi consigliati, ricavati dai dati",
-  "Dettaglio di ogni requisito con il testo ufficiale, l'esito, la motivazione e il responsabile",
-  "Criteri di calcolo, glossario e avvertenze",
+  "Copertina con identificativo del report, catalogo e versione, classificazione dichiarata e riservatezza",
+  "Executive Summary per la direzione, con numeri e denominatori",
+  "Perimetro e metodologia: che cosa copre il catalogo e che cosa no",
+  "Tre indicatori separati: implementazione dichiarata, copertura documentale, copertura delle verifiche",
+  "Analisi per area con barre di avanzamento e legenda",
+  "Gap analysis: lacune di implementazione distinte dalle carenze di verifica",
+  "Piano di adeguamento con scadenze, ritardi ed efficacia non ancora verificata",
+  "Evidenze e rischi: dichiarati come non disponibili, mai simulati",
+  "Raccomandazioni operative ricavate dai dati, conclusioni e limiti",
+  "Registro di ogni requisito: testo ufficiale, dichiarazione, evidenze, verifica, attività aperte",
 ];
 
 export default async function ReportsPage() {

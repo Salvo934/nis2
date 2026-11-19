@@ -271,7 +271,7 @@ export type Database = {
         Args: { p_org: string; p_framework_version: string; p_title: string };
         Returns: string;
       };
-      log_report_generated: { Args: { p_assessment: string }; Returns: undefined };
+      log_report_generated: { Args: { p_assessment: string; p_format?: string }; Returns: string };
     };
     Enums: { [_ in never]: never };
     CompositeTypes: { [_ in never]: never };

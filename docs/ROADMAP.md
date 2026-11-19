@@ -50,6 +50,10 @@ Ogni milestone è "completata" solo quando **tutti** i criteri sono verificati e
 - [x] Catalogo v2 dalle misure di base ACN: Determinazione 379907/2025, Allegato 1 (87 requisiti) e Allegato 2 (116 requisiti), verificati sul testo ufficiale (vedi `docs/fonti/README.md` e `docs/CHANGELOG-NORMATIVO.md`)
 - [ ] Obblighi presi direttamente dal D.Lgs. 138/2024 (artt. 7, 23, 25) e incidenti significativi di base (allegati 3 e 4)
 - [x] Report PDF per assessment (M6): linguaggio semplice, testo ufficiale dei requisiti, criteri di calcolo, data e versione del catalogo; generazione registrata nell'audit log
+- [x] Report PDF formato 2.0: identificativo univoco (voce dell'audit log), executive summary, perimetro e metodologia, tre indicatori separati (implementazione dichiarata, copertura documentale, copertura delle verifiche), gap analysis con carenze di verifica distinte, piano di adeguamento con efficacia «non verificata», registro per requisito con le cinque domande dell'auditor, disclaimer; evidenze, verifiche e rischi dichiarati «non disponibili» invece che simulati
+- [ ] Registro delle evidenze e processo di verifica (con verificatore, data ed esito), che alimenteranno gli indicatori 2 e 3 del report
+- [ ] Transizione controllata della chiusura automatica dei gap: oggi il completamento di tutte le attività porta il requisito a «Implementato»; proposta: stato «In attesa di verifica» fino alla verifica di efficacia, senza modificare lo storico esistente
+- [ ] Registro dei rischi (probabilità, impatto, trattamento, rischio residuo) e perimetro di sistemi, processi e servizi
 - [ ] Collegamento evidenze (M6)
 
 ## M3 — Dashboard

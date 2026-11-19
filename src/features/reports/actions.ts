@@ -2,19 +2,21 @@
 
 import { catalogueLabel } from "@/features/assessment/catalogues";
 import { ASSESSMENT_STATUSES } from "@/features/assessment/constants";
-import {
-  getAssessment,
-  getVersion,
-  listAssessmentItems,
-  listMemberOptions,
-} from "@/features/assessment/data";
+import { getAssessment, getVersion, listAssessmentItems } from "@/features/assessment/data";
 import { todayInRome } from "@/features/assessment/metrics";
-import { NIS2_CLASSIFICATIONS, SECTORS, SIZE_CLASSES, labelOf } from "@/features/organizations/constants";
-import { getOrganization, requireActiveOrganization } from "@/features/organizations/data";
+import {
+  NIS2_CLASSIFICATIONS,
+  ROLES,
+  SECTORS,
+  SIZE_CLASSES,
+  labelOf,
+} from "@/features/organizations/constants";
+import { getOrganization, listMembers, requireActiveOrganization } from "@/features/organizations/data";
 import { dbErrorCode, mapDbError } from "@/features/organizations/errors";
 import { uuidSchema } from "@/features/organizations/schemas";
 import { listTasks } from "@/features/remediation/data";
-import type { ReportInput } from "@/features/reports/model";
+import { REPORT_FORMAT_VERSION, type ReportInput } from "@/features/reports/model";
+import type { AnswerStatus } from "@/types/database";
 import { fail, ok, type ActionResult } from "@/lib/action-result";
 import { createClient } from "@/lib/supabase/server";
 
@@ -33,8 +35,13 @@ export async function prepareReportAction(assessmentId: unknown): Promise<Action
   if (!assessment) return fail("Assessment non trovato.");
 
   const supabase = await createClient();
-  const { error: auditError } = await supabase.rpc("log_report_generated", { p_assessment: assessment.id });
-  if (auditError) {
+  // The audit entry id is the report identifier printed on every page.
+  const { data: reportId, error: auditError } = await supabase.rpc("log_report_generated", {
+    p_assessment: assessment.id,
+    p_format: REPORT_FORMAT_VERSION,
+  });
+  if (auditError || !reportId) {
+    if (!auditError) return fail("Non è stato possibile registrare il report.");
     if (!dbErrorCode(auditError)) console.error("[reports] audit", auditError.code);
     return fail(mapDbError(auditError));
   }
@@ -44,14 +51,27 @@ export async function prepareReportAction(assessmentId: unknown): Promise<Action
     getVersion(assessment.framework_version_id),
     listAssessmentItems(orgId, assessment),
     listTasks(orgId),
-    listMemberOptions(orgId),
+    listMembers(orgId),
   ]);
   if (!organization || !version) return fail("Dati del report non disponibili.");
 
-  const nameOf = new Map(members.map((m) => [m.value, m.label]));
+  const nameOf = new Map(members.map((m) => [m.user_id, m.profile.full_name ?? m.profile.email]));
+  const person = (id: string | null) => (id ? (nameOf.get(id) ?? "Utente non più membro") : null);
   const answerIds = new Set(items.map((i) => i.answer.id));
+  const PRE_STATUSES: AnswerStatus[] = [
+    "not_assessed",
+    "implemented",
+    "partial",
+    "not_implemented",
+    "not_applicable",
+  ];
+  const previousStatus = (pre: unknown): AnswerStatus | null => {
+    const s = pre && typeof pre === "object" && "status" in pre ? (pre as { status: unknown }).status : null;
+    return PRE_STATUSES.includes(s as AnswerStatus) ? (s as AnswerStatus) : null;
+  };
 
   return ok({
+    reportId,
     generatedAt: new Date().toISOString(),
     generatedBy: user.fullName ?? user.email,
     today: todayInRome(),
@@ -59,14 +79,18 @@ export async function prepareReportAction(assessmentId: unknown): Promise<Action
       name: organization.name,
       sector: labelOf(SECTORS, organization.sector),
       sizeClass: labelOf(SIZE_CLASSES, organization.size_class),
-      classification: labelOf(NIS2_CLASSIFICATIONS, organization.nis2_classification),
+      classification: organization.nis2_classification,
+      classificationLabel: labelOf(NIS2_CLASSIFICATIONS, organization.nis2_classification),
       classificationBasis: organization.classification_basis,
+      classificationUpdatedAt: organization.classification_updated_at,
     },
     assessment: {
       id: assessment.id,
       title: assessment.title,
-      status: labelOf(ASSESSMENT_STATUSES, assessment.status),
+      status: assessment.status,
+      statusLabel: labelOf(ASSESSMENT_STATUSES, assessment.status),
       createdAt: assessment.created_at,
+      createdBy: person(assessment.created_by),
       completedAt: assessment.completed_at,
     },
     catalogue: {
@@ -74,8 +98,13 @@ export async function prepareReportAction(assessmentId: unknown): Promise<Action
       versionLabel: version.version_label,
       sourceTitle: version.source_title,
       sourceUrl: version.source_url,
+      sourcePublishedAt: version.source_published_at,
       scopeNote: version.scope_note,
     },
+    people: members.map((m) => ({
+      name: m.profile.full_name ?? m.profile.email,
+      role: labelOf(ROLES, m.role),
+    })),
     items: items.map(({ requirement, answer }) => ({
       code: requirement.code,
       categoryCode: requirement.category_code,
@@ -85,20 +114,26 @@ export async function prepareReportAction(assessmentId: unknown): Promise<Action
       sourceReference: requirement.source_reference,
       status: answer.status,
       justification: answer.justification,
-      ownerName: answer.owner_id ? (nameOf.get(answer.owner_id) ?? "Utente non più membro") : null,
+      ownerName: person(answer.owner_id),
       gapSeverity: answer.gap_severity,
       assessedAt: answer.assessed_at,
+      assessedBy: person(answer.assessed_by),
       resolvedByTasks: answer.resolved_by_tasks,
+      preResolutionStatus: previousStatus(answer.pre_resolution),
       answerId: answer.id,
     })),
     tasks: tasks
       .filter((t) => t.assessment_answer_id && answerIds.has(t.assessment_answer_id))
       .map((t) => ({
+        id: t.id,
         title: t.title,
+        description: t.description,
         priority: t.priority,
         status: t.status,
-        assigneeName: t.assignee_id ? (nameOf.get(t.assignee_id) ?? "Utente non più membro") : null,
+        assigneeName: person(t.assignee_id),
         dueDate: t.due_date,
+        createdAt: t.created_at,
+        completedAt: t.completed_at,
         answerId: t.assessment_answer_id,
       })),
   });
