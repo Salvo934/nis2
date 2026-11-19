@@ -24,6 +24,8 @@ const ACTION_LABELS: Record<string, string> = {
   "invitation.accepted": "Invito accettato",
   "assessment.created": "Assessment creato",
   "assessment.status_changed": "Stato assessment modificato",
+  "assessment.deleted": "Assessment eliminato",
+  "report.generated": "Report PDF generato",
   "answer.updated": "Valutazione requisito modificata",
   "answer.auto_resolved": "Requisito implementato (automatico)",
   "answer.auto_reopened": "Requisito riaperto (automatico)",
@@ -89,6 +91,10 @@ export function describeAuditEvent(action: string, metadata: Json): string {
     case "answer.auto_resolved":
     case "answer.auto_reopened":
       return `${String(m.requirement ?? "")}: ${ANSWER_LABELS[String(m.from)] ?? m.from} → ${ANSWER_LABELS[String(m.to)] ?? m.to}`;
+    case "assessment.deleted":
+      return `${String(m.title ?? "")} · ${String(m.answers_deleted ?? 0)} risposte eliminate, ${String(m.tasks_detached ?? 0)} attività scollegate`;
+    case "report.generated":
+      return `${String(m.title ?? "")} · catalogo ${String(m.catalogue_version ?? "")}`;
     case "assessment.created":
     case "task.created":
     case "task.deleted":

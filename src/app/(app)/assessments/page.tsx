@@ -1,4 +1,4 @@
-import { ClipboardList } from "lucide-react";
+import { BookOpen, ClipboardList } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CreateAssessmentDialog } from "@/features/assessment/components/create-assessment-dialog";
 import { ASSESSMENT_STATUSES } from "@/features/assessment/constants";
-import { suggestedVersionId } from "@/features/assessment/catalogues";
+import { catalogueLabel, suggestedVersionId } from "@/features/assessment/catalogues";
 import { listAssessments, listPublishedVersions } from "@/features/assessment/data";
 import { computeAssessmentMetrics } from "@/features/assessment/metrics";
 import { NIS2_CLASSIFICATIONS, labelOf } from "@/features/organizations/constants";
@@ -61,7 +61,7 @@ export default async function AssessmentsPage() {
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
-          {rows.map(({ assessment, answers }) => {
+          {rows.map(({ assessment, answers, version }) => {
             const m = computeAssessmentMetrics(answers);
             return (
               <Link
@@ -72,8 +72,15 @@ export default async function AssessmentsPage() {
                 <Card className="h-full transition-colors hover:bg-muted/40">
                   <CardContent className="space-y-4">
                     <div className="flex items-start justify-between gap-3">
-                      <div>
+                      <div className="min-w-0 space-y-1.5">
                         <h2 className="font-semibold">{assessment.title}</h2>
+                        {version ? (
+                          <p className="inline-flex max-w-full items-center gap-1.5 rounded-md border bg-muted/50 px-2 py-0.5 text-xs font-medium text-foreground">
+                            <BookOpen className="size-3.5 shrink-0 text-primary" aria-hidden="true" />
+                            <span className="sr-only">Catalogo normativo: </span>
+                            <span className="truncate">{catalogueLabel(version)}</span>
+                          </p>
+                        ) : null}
                         <p className="text-xs text-muted-foreground">
                           Creato il {formatDate(assessment.created_at)}
                         </p>

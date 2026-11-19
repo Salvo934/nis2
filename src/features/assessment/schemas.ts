@@ -33,5 +33,10 @@ export const updateAssessmentStatusSchema = z.object({
   status: z.enum(["draft", "in_progress", "completed", "archived"]),
 });
 
+export const deleteAssessmentSchema = z.object({
+  assessmentId: uuidSchema,
+  confirmTitle: z.string().trim().min(1, "Digita il titolo per confermare"),
+});
+
 export type UpdateAnswerInput = z.input<typeof updateAnswerSchema>;
 export type CreateAssessmentInput = z.input<typeof createAssessmentSchema>;

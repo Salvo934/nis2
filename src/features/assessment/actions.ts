@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import {
   createAssessmentSchema,
+  deleteAssessmentSchema,
   updateAnswerSchema,
   updateAssessmentStatusSchema,
   updateSeveritySchema,
@@ -108,4 +109,63 @@ export async function updateAssessmentStatusAction(input: unknown): Promise<Acti
   if (data.length === 0) return fail(FORBIDDEN);
   refresh();
   return ok();
+}
+
+/**
+ * Deletes an assessment created by mistake. org_admin only (also enforced by
+ * RLS). Answers are deleted; linked remediation tasks are kept and detached by
+ * the database. The user must type the exact title to confirm.
+ */
+export async function deleteAssessmentAction(
+  input: unknown,
+): Promise<ActionResult<{ tasksDetached: number }>> {
+  const { active } = await requireActiveOrganization();
+  if (!can(active.role, "assessment.delete"))
+    return fail("Solo gli amministratori possono eliminare un assessment.");
+  const parsed = deleteAssessmentSchema.safeParse(input);
+  if (!parsed.success) return fail(INVALID, z.flattenError(parsed.error).fieldErrors);
+
+  const supabase = await createClient();
+  const { data: assessment } = await supabase
+    .from("assessments")
+    .select("id, title")
+    .eq("id", parsed.data.assessmentId)
+    .eq("organization_id", active.organization.id)
+    .maybeSingle();
+  if (!assessment) return fail(FORBIDDEN);
+  if (assessment.title.trim() !== parsed.data.confirmTitle) {
+    return fail("Il titolo digitato non corrisponde.", {
+      confirmTitle: ["Il titolo digitato non corrisponde"],
+    });
+  }
+
+  const { data: answers } = await supabase
+    .from("assessment_answers")
+    .select("id")
+    .eq("assessment_id", assessment.id)
+    .eq("organization_id", active.organization.id);
+  const answerIds = (answers ?? []).map((a) => a.id);
+  let tasksDetached = 0;
+  if (answerIds.length > 0) {
+    const { count } = await supabase
+      .from("remediation_tasks")
+      .select("id", { count: "exact", head: true })
+      .eq("organization_id", active.organization.id)
+      .in("assessment_answer_id", answerIds);
+    tasksDetached = count ?? 0;
+  }
+
+  const { data, error } = await supabase
+    .from("assessments")
+    .delete()
+    .eq("id", assessment.id)
+    .eq("organization_id", active.organization.id)
+    .select("id");
+  if (error) {
+    log("delete", error);
+    return fail(mapDbError(error));
+  }
+  if (data.length === 0) return fail(FORBIDDEN);
+  refresh();
+  return ok({ tasksDetached });
 }

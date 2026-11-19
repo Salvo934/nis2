@@ -3,11 +3,14 @@ import type { Nis2Classification } from "@/types/database";
 type VersionLike = { id: string; version_label: string; source_title: string };
 
 const ACN_ANNEX = /Allegato (\d) – Misure di sicurezza di base per i (soggetti \w+)/;
+const EU_DIRECTIVE = /^Direttiva \(UE\) (\d{4}\/\d+)/;
 
 /** Short, unambiguous name for a catalogue version (derived from its official title). */
 export function catalogueLabel(version: Pick<VersionLike, "source_title" | "version_label">): string {
   const acn = ACN_ANNEX.exec(version.source_title);
   if (acn) return `Misure di base ACN – ${acn[2]} (Allegato ${acn[1]})`;
+  const directive = EU_DIRECTIVE.exec(version.source_title);
+  if (directive?.[1] === "2022/2555") return "Direttiva (UE) 2022/2555 (NIS2)";
   return version.source_title.split(",")[0] ?? version.version_label;
 }
 

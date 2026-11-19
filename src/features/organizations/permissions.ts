@@ -11,7 +11,8 @@ export type Permission =
   | "invitations.manage"
   | "audit.read"
   | "assessment.manage"
-  | "tasks.manage";
+  | "tasks.manage"
+  | "assessment.delete";
 
 const MATRIX: Record<Permission, readonly OrgRole[]> = {
   "organization.update": ["org_admin"],
@@ -20,6 +21,7 @@ const MATRIX: Record<Permission, readonly OrgRole[]> = {
   "audit.read": ["org_admin", "auditor"],
   "assessment.manage": ["org_admin", "security_manager"],
   "tasks.manage": ["org_admin", "security_manager"],
+  "assessment.delete": ["org_admin"],
 };
 
 export function can(role: OrgRole | null | undefined, permission: Permission): boolean {

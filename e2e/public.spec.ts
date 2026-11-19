@@ -24,7 +24,15 @@ test.describe("route protection", () => {
     await expect(page.getByRole("heading", { name: "Accedi" })).toBeVisible();
   });
 
-  for (const path of ["/settings/members", "/settings/audit", "/organizations/new", "/assessments", "/gap-analysis", "/tasks"]) {
+  for (const path of [
+    "/settings/members",
+    "/settings/audit",
+    "/organizations/new",
+    "/assessments",
+    "/gap-analysis",
+    "/tasks",
+    "/reports",
+  ]) {
     test(`anonymous visitor cannot open ${path}`, async ({ page }) => {
       await page.goto(path);
       await expect(page).toHaveURL(new RegExp(`/login\\?next=${encodeURIComponent(path)}$`));

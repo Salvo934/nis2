@@ -38,6 +38,11 @@ describe("can (UI mirror of the RLS matrix)", () => {
     expect(can("viewer", "audit.read")).toBe(false);
     expect(can(null, "audit.read")).toBe(false);
   });
+  it("lets only org_admin delete assessments", () => {
+    expect(can("org_admin", "assessment.delete")).toBe(true);
+    expect(can("security_manager", "assessment.delete")).toBe(false);
+    expect(can("auditor", "assessment.delete")).toBe(false);
+  });
 });
 
 describe("normalizeItalianVat", () => {

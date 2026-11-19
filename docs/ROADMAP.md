@@ -49,7 +49,8 @@ Ogni milestone è "completata" solo quando **tutti** i criteri sono verificati e
 - [ ] Verifica manuale end-to-end con utente loggato
 - [x] Catalogo v2 dalle misure di base ACN: Determinazione 379907/2025, Allegato 1 (87 requisiti) e Allegato 2 (116 requisiti), verificati sul testo ufficiale (vedi `docs/fonti/README.md` e `docs/CHANGELOG-NORMATIVO.md`)
 - [ ] Obblighi presi direttamente dal D.Lgs. 138/2024 (artt. 7, 23, 25) e incidenti significativi di base (allegati 3 e 4)
-- [ ] Collegamento evidenze (M6) e report PDF (M6)
+- [x] Report PDF per assessment (M6): linguaggio semplice, testo ufficiale dei requisiti, criteri di calcolo, data e versione del catalogo; generazione registrata nell'audit log
+- [ ] Collegamento evidenze (M6)
 
 ## M3 — Dashboard
 

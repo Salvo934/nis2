@@ -34,7 +34,7 @@ export const NAV_SECTIONS: NavSection[] = [
       { href: "/gap-analysis", label: "Gap analysis", icon: SearchCheck, available: true },
       { href: "/tasks", label: "Piano di adeguamento", icon: ListTodo, available: true },
       { href: "/evidence", label: "Evidenze", icon: FolderLock, available: false },
-      { href: "/reports", label: "Report", icon: FileBarChart, available: false },
+      { href: "/reports", label: "Report", icon: FileBarChart, available: true },
     ],
   },
   {

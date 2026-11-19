@@ -54,7 +54,24 @@ export async function listAssessments(organizationId: string) {
     list.push({ status: a.status });
     byAssessment.set(a.assessment_id, list);
   }
-  return assessments.map((assessment) => ({ assessment, answers: byAssessment.get(assessment.id) ?? [] }));
+
+  // Catalogue of each assessment (also retired versions, which RLS still exposes).
+  const versionIds = [...new Set(assessments.map((a) => a.framework_version_id))];
+  const versions = new Map<string, { version_label: string; source_title: string }>();
+  if (versionIds.length > 0) {
+    const { data: rows, error: versionsError } = await supabase
+      .from("regulatory_framework_versions")
+      .select("id, version_label, source_title")
+      .in("id", versionIds);
+    if (versionsError) throw new Error("Impossibile caricare il catalogo normativo");
+    for (const v of rows) versions.set(v.id, v);
+  }
+
+  return assessments.map((assessment) => ({
+    assessment,
+    answers: byAssessment.get(assessment.id) ?? [],
+    version: versions.get(assessment.framework_version_id) ?? null,
+  }));
 }
 
 /** Most recent assessment that is not archived (used by dashboard and gap analysis). */

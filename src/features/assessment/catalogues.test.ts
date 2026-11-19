@@ -26,9 +26,7 @@ describe("catalogueLabel", () => {
   it("distinguishes the ACN annexes", () => {
     expect(catalogueLabel(versions[1]!)).toBe("Misure di base ACN – soggetti importanti (Allegato 1)");
     expect(catalogueLabel(versions[2]!)).toBe("Misure di base ACN – soggetti essenziali (Allegato 2)");
-    expect(catalogueLabel(versions[0]!)).toBe(
-      "Direttiva (UE) 2022/2555 del Parlamento europeo e del Consiglio",
-    );
+    expect(catalogueLabel(versions[0]!)).toBe("Direttiva (UE) 2022/2555 (NIS2)");
   });
 });
 
