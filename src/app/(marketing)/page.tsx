@@ -1,7 +1,7 @@
 import {
-  ArrowRight,
   ClipboardList,
   FileBarChart,
+  FileDown,
   FolderLock,
   Layers,
   ListTodo,
@@ -14,6 +14,8 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
+import { DemoButton } from "@/features/demo/components/demo-button";
+import { DEMO_COMPANY, SAMPLE_REPORT_FILENAME, SAMPLE_REPORT_PATH } from "@/features/demo/constants";
 
 const modules = [
   {
@@ -79,9 +81,7 @@ export default function HomePage() {
           <Button variant="ghost" asChild>
             <Link href="/login">Accedi</Link>
           </Button>
-          <Button asChild className="hidden sm:inline-flex">
-            <Link href="/signup">Crea account</Link>
-          </Button>
+          <DemoButton className="hidden sm:inline-flex" />
         </div>
       </header>
 
@@ -104,15 +104,22 @@ export default function HomePage() {
               sicuro.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button size="lg" asChild className="h-10 px-4">
-                <Link href="/signup">
-                  Inizia ora <ArrowRight data-icon="inline-end" />
-                </Link>
-              </Button>
+              <DemoButton size="lg" className="h-10 px-4" />
               <Button size="lg" variant="outline" asChild className="h-10 px-4">
-                <Link href="/login">Accedi</Link>
+                <a href={SAMPLE_REPORT_PATH} download={SAMPLE_REPORT_FILENAME}>
+                  <FileDown data-icon="inline-start" /> Scarica un report di esempio (PDF)
+                </a>
               </Button>
             </div>
+            <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
+              La demo apre {DEMO_COMPANY}, un&apos;azienda fittizia dichiarata soggetto importante: assessment
+              sulle misure di base ACN fatto a metà, lacune già classificate e piano d&apos;azione con
+              scadenze. Nessuna registrazione; la tua copia è privata.{" "}
+              <Link href="/signup" className="font-medium text-foreground underline-offset-4 hover:underline">
+                Crea un account
+              </Link>{" "}
+              per usare i tuoi dati.
+            </p>
           </div>
         </section>
 

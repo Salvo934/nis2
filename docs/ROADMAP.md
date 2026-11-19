@@ -85,7 +85,9 @@ Ogni milestone è "completata" solo quando **tutti** i criteri sono verificati e
 
 ## M7 — Preparazione commerciale
 
-- Modalità demo con organizzazione fittizia e dati sintetici
+- [x] Modalità demo «Prova la demo» (login e home): sessione anonima e copia privata di Rossi Logistica S.r.l. (azienda fittizia, soggetto importante) con assessment ACN a metà, gap classificati e piano d'azione; dati da `data/demo/rossi-logistica.json`, eliminati dopo 7 giorni (pg_cron)
+- [x] Report PDF di esempio scaricabile dalla home, generato dagli stessi dati della demo
+- [ ] Protezione anti-abuso degli accessi anonimi (CAPTCHA Turnstile)
 - CSP, header di sicurezza, rate limiting, revisione dipendenze, threat model
 - Deploy Cloudflare verificato (incluso il proxy Node sperimentale o fallback)
 - Documentazione tecnica e di onboarding

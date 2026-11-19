@@ -8,6 +8,21 @@ test.describe("public pages", () => {
     await expect(page.getByText(/non costituisce certificazione/i).first()).toBeVisible();
   });
 
+  test("the demo and the sample report are one click away, without signing up", async ({ page, request }) => {
+    await page.goto("/");
+    await expect(page.getByRole("button", { name: "Prova la demo" }).first()).toBeVisible();
+    const sample = page.getByRole("link", { name: /report di esempio/i });
+    await expect(sample).toBeVisible();
+    const href = await sample.getAttribute("href");
+    const pdf = await request.get(href!);
+    expect(pdf.status()).toBe(200);
+    expect(pdf.headers()["content-type"]).toContain("application/pdf");
+
+    await page.goto("/login");
+    await expect(page.getByRole("button", { name: "Prova la demo" })).toBeVisible();
+    await expect(page.getByRole("link", { name: /report PDF di esempio/i })).toBeVisible();
+  });
+
   test("security headers are set", async ({ request }) => {
     const response = await request.get("/");
     const headers = response.headers();

@@ -14,6 +14,8 @@ export type SessionUser = {
   email: string;
   fullName: string | null;
   emailConfirmedAt: string | null;
+  /** Anonymous demo visitor ("Prova la demo"). */
+  isAnonymous: boolean;
 };
 
 /**
@@ -40,6 +42,7 @@ export const getUser = cache(async (): Promise<SessionUser | null> => {
     email: user.email ?? "",
     fullName: typeof fullName === "string" && fullName.trim() ? fullName.trim() : null,
     emailConfirmedAt: user.email_confirmed_at ?? null,
+    isAnonymous: user.is_anonymous === true,
   };
 });
 

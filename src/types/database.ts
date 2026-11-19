@@ -45,6 +45,8 @@ export type Database = {
           created_by: string | null;
           created_at: string;
           updated_at: string;
+          /** Fictitious organisation of an anonymous demo visitor. */
+          is_demo: boolean;
         };
         Insert: never;
         Update: {
@@ -271,6 +273,7 @@ export type Database = {
         Args: { p_org: string; p_framework_version: string; p_title: string };
         Returns: string;
       };
+      create_demo_organization: { Args: Record<string, never>; Returns: string };
       log_report_generated: { Args: { p_assessment: string; p_format?: string }; Returns: string };
     };
     Enums: { [_ in never]: never };
