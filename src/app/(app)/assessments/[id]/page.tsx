@@ -8,6 +8,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { AssessmentStatusControl } from "@/features/assessment/components/assessment-status-control";
 import { AssessmentWorkspace } from "@/features/assessment/components/assessment-workspace";
+import { catalogueLabel } from "@/features/assessment/catalogues";
 import { ASSESSMENT_STATUSES } from "@/features/assessment/constants";
 import {
   getAssessment,
@@ -49,7 +50,7 @@ export default async function AssessmentPage({ params }: PageProps<"/assessments
         description={
           version ? (
             <>
-              Catalogo: {version.source_title.split(",")[0]} · versione{" "}
+              Catalogo: {catalogueLabel(version)} · versione{" "}
               <span className="font-mono">{version.version_label}</span>
             </>
           ) : null

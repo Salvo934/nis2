@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
 
@@ -24,19 +24,25 @@ import {
 } from "@/components/ui/dialog";
 import { FieldGroup } from "@/components/ui/field";
 import { createAssessmentAction } from "@/features/assessment/actions";
+import { catalogueLabel } from "@/features/assessment/catalogues";
 import { createAssessmentSchema } from "@/features/assessment/schemas";
 
 type Input = z.input<typeof createAssessmentSchema>;
 type Output = z.output<typeof createAssessmentSchema>;
 
-type Version = { id: string; version_label: string; source_title: string };
+type Version = { id: string; version_label: string; source_title: string; scope_note: string | null };
 
 export function CreateAssessmentDialog({
   versions,
   defaultTitle,
+  suggestedId,
+  suggestionReason,
 }: {
   versions: Version[];
   defaultTitle: string;
+  /** Catalogue matching the declared NIS2 classification, if any. */
+  suggestedId: string | null;
+  suggestionReason: string | null;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -50,8 +56,10 @@ export function CreateAssessmentDialog({
     formState: { errors, isSubmitting },
   } = useForm<Input, unknown, Output>({
     resolver: zodResolver(createAssessmentSchema),
-    defaultValues: { title: defaultTitle, frameworkVersionId: versions[0]?.id ?? "" },
+    defaultValues: { title: defaultTitle, frameworkVersionId: suggestedId ?? versions[0]?.id ?? "" },
   });
+  const selectedId = useWatch({ control, name: "frameworkVersionId" });
+  const selected = versions.find((v) => v.id === selectedId);
 
   async function onSubmit(values: Output) {
     setFormError(null);
@@ -97,13 +105,23 @@ export function CreateAssessmentDialog({
                   onValueChange={field.onChange}
                   options={versions.map((v) => ({
                     value: v.id,
-                    label: v.source_title.split(",")[0] ?? v.version_label,
-                    hint: v.version_label,
+                    label: catalogueLabel(v),
+                    hint: v.id === suggestedId ? "suggerito" : null,
                   }))}
                   error={errors.frameworkVersionId}
+                  description={
+                    suggestedId && suggestionReason
+                      ? `Suggerito in base alla classificazione dichiarata: ${suggestionReason}.`
+                      : "Nessun suggerimento: la classificazione NIS2 dell'organizzazione non è stata dichiarata."
+                  }
                 />
               )}
             />
+            {selected?.scope_note ? (
+              <p className="rounded-lg bg-muted/50 p-3 text-xs leading-relaxed text-muted-foreground">
+                {selected.scope_note}
+              </p>
+            ) : null}
           </FieldGroup>
           <DialogFooter>
             <Button type="submit" disabled={isSubmitting}>

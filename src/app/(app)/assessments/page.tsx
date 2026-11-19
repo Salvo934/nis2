@@ -8,9 +8,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CreateAssessmentDialog } from "@/features/assessment/components/create-assessment-dialog";
 import { ASSESSMENT_STATUSES } from "@/features/assessment/constants";
+import { suggestedVersionId } from "@/features/assessment/catalogues";
 import { listAssessments, listPublishedVersions } from "@/features/assessment/data";
 import { computeAssessmentMetrics } from "@/features/assessment/metrics";
-import { requireActiveOrganization } from "@/features/organizations/data";
+import { NIS2_CLASSIFICATIONS, labelOf } from "@/features/organizations/constants";
+import { getOrganization, requireActiveOrganization } from "@/features/organizations/data";
 import { can } from "@/features/organizations/permissions";
 import { formatDate } from "@/lib/format";
 
@@ -18,10 +20,13 @@ export const metadata: Metadata = { title: "Assessment NIS2" };
 
 export default async function AssessmentsPage() {
   const { active } = await requireActiveOrganization();
-  const [rows, versions] = await Promise.all([
+  const [rows, versions, organization] = await Promise.all([
     listAssessments(active.organization.id),
     listPublishedVersions(),
+    getOrganization(active.organization.id),
   ]);
+  const classification = organization?.nis2_classification ?? null;
+  const suggestedId = suggestedVersionId(versions, classification);
   const canManage = can(active.role, "assessment.manage");
   const defaultTitle = `Assessment NIS2 – ${new Intl.DateTimeFormat("it-IT", { month: "long", year: "numeric", timeZone: "Europe/Rome" }).format(new Date())}`;
 
@@ -31,7 +36,14 @@ export default async function AssessmentsPage() {
         title="Assessment NIS2"
         description="Valutazioni dei requisiti del catalogo normativo. I risultati sono autodichiarati e non costituiscono certificazione."
         actions={
-          canManage ? <CreateAssessmentDialog versions={versions} defaultTitle={defaultTitle} /> : null
+          canManage ? (
+            <CreateAssessmentDialog
+              versions={versions}
+              defaultTitle={defaultTitle}
+              suggestedId={suggestedId}
+              suggestionReason={classification ? labelOf(NIS2_CLASSIFICATIONS, classification) : null}
+            />
+          ) : null
         }
       />
 

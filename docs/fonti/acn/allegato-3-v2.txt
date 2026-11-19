@@ -1,0 +1,15 @@
+
+=== PAGINA 1 ===
+ALLEGATO 3
+Incidenti significativi di base per i soggetti importanti
+Codice Descrizione
+Il soggetto NIS ha evidenza della perdita di riservatezza, verso l’esterno, di dati
+IS-1
+digitali di sua proprietà o sui quali esercita il controllo, anche parziale.
+Il soggetto NIS ha evidenza della perdita di integrità, con impatto verso l’esterno, di
+IS-2
+dati digitali di sua proprietà o sui quali esercita il controllo, anche parziale.
+Il soggetto NIS ha evidenza della violazione dei livelli di servizio attesi dei suoi
+IS-3servizi e/o delle sue attività, sulla base dei livelli di servizio atteso (SL) stabiliti ai
+sensi della misura DE.CM-01.
+1 di 1

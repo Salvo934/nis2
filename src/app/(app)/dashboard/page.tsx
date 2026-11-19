@@ -15,6 +15,7 @@ import { MetricCard } from "@/components/metric-card";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { catalogueLabel } from "@/features/assessment/catalogues";
 import { ASSESSMENT_STATUSES, TASK_PRIORITIES } from "@/features/assessment/constants";
 import { getCurrentAssessment, getVersion, listAssessmentItems } from "@/features/assessment/data";
 import {
@@ -285,7 +286,7 @@ export default async function DashboardPage() {
           <p className="text-xs text-muted-foreground">
             Dati calcolati il {formatDateTime(new Date())} dalle risposte dell&apos;assessment «
             {assessment.title}» e dalle attività registrate. Catalogo:{" "}
-            {version?.source_title.split(",")[0] ?? "—"} (versione{" "}
+            {version ? catalogueLabel(version) : "—"} (versione{" "}
             <span className="font-mono">{version?.version_label ?? "—"}</span>). Gli indicatori misurano
             l&apos;avanzamento di valutazioni autodichiarate e non costituiscono una certificazione di
             conformità.

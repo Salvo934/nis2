@@ -47,7 +47,8 @@ Ogni milestone è "completata" solo quando **tutti** i criteri sono verificati e
 - [x] UI: elenco e dettaglio assessment con filtri, risposta (stato, motivazione, responsabile, data); gap analysis con criticità e creazione di attività; piano di adeguamento con filtri e scadenze; dashboard con KPI, grafici e criteri di calcolo
 - [x] Migration applicate al progetto Supabase `nis2-control`, contenuto del catalogo verificato online via hash; deploy su Cloudflare
 - [ ] Verifica manuale end-to-end con utente loggato
-- [ ] Catalogo v2 dalle determinazioni ACN (serve il testo ufficiale)
+- [x] Catalogo v2 dalle misure di base ACN: Determinazione 379907/2025, Allegato 1 (87 requisiti) e Allegato 2 (116 requisiti), verificati sul testo ufficiale (vedi `docs/fonti/README.md` e `docs/CHANGELOG-NORMATIVO.md`)
+- [ ] Obblighi presi direttamente dal D.Lgs. 138/2024 (artt. 7, 23, 25) e incidenti significativi di base (allegati 3 e 4)
 - [ ] Collegamento evidenze (M6) e report PDF (M6)
 
 ## M3 — Dashboard

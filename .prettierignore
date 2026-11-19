@@ -8,3 +8,4 @@ test-results
 package-lock.json
 src/components/ui
 supabase/.temp
+docs/fonti

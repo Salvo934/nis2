@@ -72,7 +72,7 @@ export function AnswerEditor({ item, members, canEdit, sourceUrl, onSaved }: Pro
         <h3 id="official-text" className="text-sm font-semibold">
           Testo della norma
         </h3>
-        <blockquote className="rounded-lg border-l-4 border-primary/40 bg-muted/40 p-3 text-sm leading-relaxed">
+        <blockquote className="rounded-lg border-l-4 border-primary/40 bg-muted/40 p-3 text-sm leading-relaxed whitespace-pre-line">
           {requirement.description}
         </blockquote>
         <p className="flex flex-wrap items-center gap-x-2 text-xs text-muted-foreground">
